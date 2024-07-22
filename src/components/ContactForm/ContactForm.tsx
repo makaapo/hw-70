@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Contact, MutateContact} from '../../types';
+import ButtonSpinner from '../Spinner/BottonSpinner';
 
 interface Props {
   onSubmit: (contact: Contact) => void;
   existingContact?: Contact;
+  isLoading?: boolean;
 }
 
 const emptyState: MutateContact = {
@@ -14,7 +16,7 @@ const emptyState: MutateContact = {
   photo: '',
 };
 
-const ContactForm: React.FC<Props> = ({onSubmit, existingContact}) => {
+const ContactForm: React.FC<Props> = ({onSubmit, existingContact,isLoading = false,}) => {
   const navigate = useNavigate();
   const initialState: MutateContact = existingContact
     ? {...existingContact, phone: existingContact.phone.toString()}
@@ -105,7 +107,9 @@ const ContactForm: React.FC<Props> = ({onSubmit, existingContact}) => {
         </div>
 
         <div className="text-center">
-          <button type="submit" className="btn btn-primary">{existingContact ? 'Update' : 'Add'}</button>
+          <button type="submit" className="btn btn-primary" disabled={isLoading}>
+            {existingContact ? 'Update' : 'Add'}
+            {isLoading && <ButtonSpinner />}</button>
           <button
             type="submit"
             className="ms-3 btn btn-warning"
