@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Contact, MutateContact} from '../../types';
-import ButtonSpinner from '../Spinner/BottonSpinner';
+import ButtonSpinner from '../Spinner/ButtonSpinner';
 
 interface Props {
   onSubmit: (contact: Contact) => void;
@@ -16,7 +16,7 @@ const emptyState: MutateContact = {
   photo: '',
 };
 
-const ContactForm: React.FC<Props> = ({onSubmit, existingContact,isLoading = false,}) => {
+const ContactForm: React.FC<Props> = ({onSubmit, existingContact, isLoading = false}) => {
   const navigate = useNavigate();
   const initialState: MutateContact = existingContact
     ? {...existingContact, phone: existingContact.phone.toString()}
@@ -24,12 +24,16 @@ const ContactForm: React.FC<Props> = ({onSubmit, existingContact,isLoading = fal
 
   const [contact, setContact] = useState<MutateContact>(initialState);
 
-  const changeContact = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+
+  useEffect(() => {
+    setContact(initialState);
+  }, [existingContact]);
+
+  const changeContact = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = event.target;
     setContact((prev) => ({
       ...prev,
-      [event.target.name]: event.target.value,
+      [name]: value,
     }));
   };
 
@@ -45,7 +49,7 @@ const ContactForm: React.FC<Props> = ({onSubmit, existingContact,isLoading = fal
   return (
     <>
       <form onSubmit={onFormSubmit}>
-        <h4 className="text-center">{existingContact ? 'Edit comtact' : 'Add new contact'}</h4>
+        <h4 className="text-center">{existingContact ? 'Edit contact' : 'Add new contact'}</h4>
         <div className="mb-3 w-75 mx-auto">
           <label htmlFor="name" className="form-label">Name</label>
           <input
@@ -94,27 +98,28 @@ const ContactForm: React.FC<Props> = ({onSubmit, existingContact,isLoading = fal
           />
         </div>
 
-
         <div className="mb-3 w-75 mx-auto">
           <label htmlFor="photo-preview" className="form-label">Photo preview:</label>
           <img
             className="ms-3 border border-black"
             width="100"
             height="100"
-            src={contact.photo}
             alt={contact.name}
+            src={contact.photo}
           />
         </div>
 
         <div className="text-center">
           <button type="submit" className="btn btn-primary" disabled={isLoading}>
             {existingContact ? 'Update' : 'Add'}
-            {isLoading && <ButtonSpinner />}</button>
+            {isLoading && <ButtonSpinner/>}
+          </button>
           <button
-            type="submit"
+            type="button"
             className="ms-3 btn btn-warning"
             onClick={() => navigate('/')}
-          >Back to contacts
+          >
+            Back to contacts
           </button>
         </div>
       </form>

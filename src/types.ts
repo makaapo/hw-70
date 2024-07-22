@@ -22,7 +22,6 @@ export interface Contacts {
 
 export type ApiContact = Omit<Contacts, 'id'>;
 
-
 export interface ApiContacts {
   [id: string]: ApiContact;
 }

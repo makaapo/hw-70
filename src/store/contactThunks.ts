@@ -1,12 +1,12 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import {ApiContact, ApiContacts, Contact, Contacts} from '../types';
+import {createAsyncThunk} from '@reduxjs/toolkit';
+import {ApiContact, ApiContacts, Contacts} from '../types';
 import axiosApi from '../axiosApi';
 import {AppDispatch, RootState} from '../app/store';
 
 export const fetchContacts = createAsyncThunk<
   Contacts[],
   undefined,
-  {dispatch: AppDispatch}
+  { dispatch: AppDispatch }
 >('contacts/fetchContacts', async () => {
   const contactsResponse = await axiosApi.get<ApiContacts | null>('/contacts.json');
   const contacts = contactsResponse.data;
@@ -26,9 +26,9 @@ export const fetchContacts = createAsyncThunk<
   return newContacts;
 });
 
-export const addContact = createAsyncThunk<void, ApiContact, {state: RootState}>(
+export const addContact = createAsyncThunk<void, ApiContact, { state: RootState }>(
   'contacts/add',
-  async (contact: Contact) => {
+  async (contact: ApiContact) => {
     await axiosApi.post('/contacts.json', contact);
   }
 );

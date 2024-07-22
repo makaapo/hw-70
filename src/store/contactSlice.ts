@@ -1,12 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {ApiContact} from '../types';
+import {Contacts} from '../types';
 import {addContact, fetchContacts} from './contactThunks';
 
 
 export interface ContactsState {
-  contacts: ApiContact[];
+  contacts: Contacts[];
   isLoading: boolean;
   isCreating: boolean
+  isCardLoading: boolean;
   isError: boolean;
 }
 
@@ -15,6 +16,7 @@ const initialState: ContactsState = {
   isLoading: false,
   isCreating: false,
   isError: false,
+  isCardLoading: false,
 };
 
 const contactsSlice = createSlice({
@@ -52,14 +54,18 @@ const contactsSlice = createSlice({
   },
 
   selectors: {
-    isLoading: (state) => state.isLoading,
+    isFetchLoading: (state) => state.isLoading,
     selectCreateContactLoading: (state) => state.isCreating,
+    selectContacts: (state) => state.contacts,
+    SelectCardLoading: (state) => state.isCardLoading,
   },
 
 });
 export const {
-  isLoading,
+  isFetchLoading,
   selectCreateContactLoading,
+  selectContacts,
+  SelectCardLoading
 } = contactsSlice.selectors;
 
 
