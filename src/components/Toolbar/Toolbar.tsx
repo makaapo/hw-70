@@ -6,8 +6,8 @@ const Toolbar = () => {
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary container">
 
       <div className="container">
-        <NavLink to="/" className="navbar-brand d-flex ">
-          <p className="me-2">Contacts</p>
+        <NavLink to="/" className="navbar-brand d-flex fs-3">
+          Contacts
         </NavLink>
 
         <ul className="navbar-nav mr-auto flex-row gap-2 flex-nowrap">

@@ -54,8 +54,15 @@ export interface UpdateContactArg {
 }
 
 export const updateContact = createAsyncThunk<void, UpdateContactArg, {state: RootState}>(
-  'contact/update',
+  'contacts/update',
   async ({ id, ApiContact }) => {
     await axiosApi.put(`/contacts/${id}.json`, ApiContact);
+  },
+);
+
+export const deleteContact = createAsyncThunk<void, string, {state: RootState}>(
+  'contacts/deleteContact',
+  async (contactId) => {
+    await axiosApi.delete('/contacts/' + contactId + '.json');
   },
 );

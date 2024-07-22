@@ -3,8 +3,11 @@ import {useNavigate} from 'react-router-dom';
 import {Contacts} from '../../types';
 import Spinner from '../Spinner/Spinner';
 import Modal from '../Modal/Modal';
-import {useAppSelector} from '../../app/hooks';
-import {SelectCardLoading} from '../../store/contactSlice';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {SelectCardLoading, selectDeleteContactLoading} from '../../store/contactSlice';
+import {deleteContact, fetchContacts} from '../../store/contactThunks';
+import ButtonSpinner from '../Spinner/ButtonSpinner';
+import {toast} from 'react-toastify';
 
 interface Props {
   contact: Contacts;
@@ -13,7 +16,20 @@ interface Props {
 const ContactCard: React.FC<Props> = ({contact}) => {
   const [open, setOpen] = useState(false);
   const isLoading = useAppSelector(SelectCardLoading);
+  const deleteLoading = useAppSelector(selectDeleteContactLoading);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const onDelete = async (id: string) => {
+    try {
+      await dispatch(deleteContact(id));
+      setOpen(false);
+      await dispatch(fetchContacts());
+      toast.success('Contact deleted!');
+    } catch (error) {
+      toast.error('Could not delete contact!');
+    }
+  };
 
   const imageStyle = {
     background: `url(${contact.photo}) no-repeat center center / cover`,
@@ -56,10 +72,11 @@ const ContactCard: React.FC<Props> = ({contact}) => {
                   Edit
                 </button>
                 <button
+                  onClick={() => onDelete(contact.id)}
                   type="button"
                   className="ms-3 btn btn-danger"
-                >
-                  Delete
+                >Delete
+                  {deleteLoading && (<ButtonSpinner />)}
                 </button>
               </div>
             </div>
