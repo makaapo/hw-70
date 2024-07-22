@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {Contacts} from '../types';
-import {addContact, fetchContacts} from './contactThunks';
+import {ApiContact, Contacts} from '../types';
+import {addContact, fetchContacts, fetchOneContact, updateContact} from './contactThunks';
 
 
 export interface ContactsState {
@@ -9,6 +9,9 @@ export interface ContactsState {
   isCreating: boolean
   isCardLoading: boolean;
   isError: boolean;
+  fetchOneLoading: boolean;
+  oneContact: null | ApiContact;
+  updateLoading: boolean,
 }
 
 const initialState: ContactsState = {
@@ -17,6 +20,9 @@ const initialState: ContactsState = {
   isCreating: false,
   isError: false,
   isCardLoading: false,
+  oneContact: null,
+  fetchOneLoading: false,
+  updateLoading: false
 };
 
 const contactsSlice = createSlice({
@@ -50,7 +56,29 @@ const contactsSlice = createSlice({
       state.isCreating = false;
       state.isError = true;
     });
+    builder
+      .addCase(fetchOneContact.pending, (state) => {
+        state.oneContact = null;
+        state.fetchOneLoading = true;
+      })
+      .addCase(fetchOneContact.fulfilled, (state, { payload: apiContact }) => {
+        state.oneContact = apiContact;
+        state.fetchOneLoading = false;
+      })
+      .addCase(fetchOneContact.rejected, (state) => {
+        state.fetchOneLoading = false;
+      });
 
+    builder
+      .addCase(updateContact.pending, (state) => {
+        state.updateLoading = true;
+      })
+      .addCase(updateContact.fulfilled, (state) => {
+        state.updateLoading = false;
+      })
+      .addCase(updateContact.rejected, (state) => {
+        state.updateLoading = false;
+      });
   },
 
   selectors: {
@@ -58,6 +86,9 @@ const contactsSlice = createSlice({
     selectCreateContactLoading: (state) => state.isCreating,
     selectContacts: (state) => state.contacts,
     SelectCardLoading: (state) => state.isCardLoading,
+    selectFetchOneContactLoading: (state) => state.fetchOneLoading,
+    selectUpdateContactLoading: (state) => state.updateLoading,
+    selectOneContact: (state) => state.oneContact,
   },
 
 });
@@ -65,7 +96,10 @@ export const {
   isFetchLoading,
   selectCreateContactLoading,
   selectContacts,
-  SelectCardLoading
+  SelectCardLoading,
+  selectFetchOneContactLoading,
+  selectUpdateContactLoading,
+  selectOneContact
 } = contactsSlice.selectors;
 
 

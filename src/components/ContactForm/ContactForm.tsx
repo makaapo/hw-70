@@ -59,18 +59,20 @@ const ContactForm: React.FC<Props> = ({onSubmit, existingContact, isLoading = fa
             className="form-control"
             value={contact.name}
             onChange={changeContact}
+            required
           />
         </div>
 
         <div className="mb-3 w-75 mx-auto">
           <label htmlFor="phone" className="form-label">Phone</label>
           <input
-            type="text"
+            type="tel"
             name="phone"
             id="phone"
             className="form-control"
             value={contact.phone}
             onChange={changeContact}
+            required
           />
         </div>
 
@@ -83,18 +85,20 @@ const ContactForm: React.FC<Props> = ({onSubmit, existingContact, isLoading = fa
             className="form-control"
             value={contact.email}
             onChange={changeContact}
+            required
           />
         </div>
 
         <div className="mb-3 w-75 mx-auto">
           <label htmlFor="photo" className="form-label">Photo</label>
           <input
-            type="text"
+            type="url"
             name="photo"
             id="photo"
             className="form-control"
             value={contact.photo}
             onChange={changeContact}
+            required
           />
         </div>
 

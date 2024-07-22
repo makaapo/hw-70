@@ -2,6 +2,7 @@ import {Route, Routes} from 'react-router-dom';
 import Toolbar from './components/Toolbar/Toolbar';
 import AddContact from './containers/AddContact/AddContact';
 import Home from './containers/Home/Home';
+import EditContact from './containers/EditContact/EditContact';
 
 const App = () => {
 
@@ -15,6 +16,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/new-contact" element={<AddContact />}/>
+          <Route path="/edit-contact/:id" element={<EditContact/>}/>
           <Route path="*" element={(<h1 className="text-center">Not found</h1>)}/>
         </Routes>
       </main>

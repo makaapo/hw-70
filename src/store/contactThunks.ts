@@ -32,3 +32,30 @@ export const addContact = createAsyncThunk<void, ApiContact, { state: RootState 
     await axiosApi.post('/contacts.json', contact);
   }
 );
+
+export const fetchOneContact = createAsyncThunk<ApiContact, string, {state: RootState}>(
+  'contacts/fetchOne',
+  async (id) => {
+    const { data: dish } = await axiosApi.get<ApiContact | null>(
+      `/contacts/${id}.json`,
+    );
+
+    if (dish === null) {
+      throw new Error('Not found');
+    }
+
+    return dish;
+  },
+);
+
+export interface UpdateContactArg {
+  id: string;
+  ApiContact: ApiContact;
+}
+
+export const updateContact = createAsyncThunk<void, UpdateContactArg, {state: RootState}>(
+  'contact/update',
+  async ({ id, ApiContact }) => {
+    await axiosApi.put(`/contacts/${id}.json`, ApiContact);
+  },
+);
