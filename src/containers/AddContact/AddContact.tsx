@@ -25,7 +25,7 @@ const NewDish: React.FC = () => {
   return (
     <div className="row mt-2">
       <div className="col">
-        <ContactForm onSubmit={onSubmit} isLoading={isCreating} />
+        <ContactForm onSubmit={onSubmit} isLoading={isCreating}/>
       </div>
     </div>
   );

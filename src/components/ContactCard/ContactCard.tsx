@@ -39,15 +39,15 @@ const ContactCard: React.FC<Props> = ({contact}) => {
     <>
       <div
         onClick={() => setOpen(true)}
-        className="card p-3 mb-2 w-25"
+        className="card p-3 mb-2 w-25 btn border"
       >
         <div className="row g-0 align-items-center">
           <div
-            className="col-sm-4 rounded-start p-5"
+            className="col-sm-4 rounded p-5"
             style={imageStyle}
           />
           <div className="col-sm-8 ps-5">
-            <p>{contact.name}</p>
+            <strong className="fs-4"><i className="bi bi-person-fill-up fs-3 me-2"></i>{contact.name}</strong>
           </div>
         </div>
       </div>
@@ -57,26 +57,28 @@ const ContactCard: React.FC<Props> = ({contact}) => {
           <>
             <div className="modal-body d-flex justify-content-between align-items-center">
               <div
-                className="modal-image p-5"
+                className="modal-image p-5 rounded"
                 style={imageStyle}
               />
-              <div className="ms-3">
-                <h3>{contact.name}</h3>
-                <p>{contact.phone}</p>
-                <p>{contact.email}</p>
+              <div>
+                <h3 className="fs-2">{contact.name}</h3>
+                <a className="d-block link-opacity-75-hover text-decoration-none mb-2 fs-5" href={`tel:+${contact.phone}`}><i className="bi bi-telephone-outbound me-3 text-success"></i>+{contact.phone}
+                </a>
+                <a className="d-block link-opacity-75-hover text-decoration-none mb-2 fs-5" href={`mailto:${contact.email}`}><i className="bi bi-envelope-paper-heart-fill me-3 text-primary"></i>{contact.email}
+                </a>
                 <button
                   onClick={() => navigate(`/edit-contact/${contact.id}`)}
                   type="button"
-                  className="btn btn-warning"
+                  className="btn"
                 >
-                  Edit
+                  <i className="bi bi-pencil-square fs-3 text-success"></i>
                 </button>
                 <button
                   onClick={() => onDelete(contact.id)}
                   type="button"
-                  className="ms-3 btn btn-danger"
-                >Delete
-                  {deleteLoading && (<ButtonSpinner />)}
+                  className="ms-3 btn"
+                ><i className="bi bi-person-x fs-3 text-danger"></i>
+                  {deleteLoading && (<ButtonSpinner/>)}
                 </button>
               </div>
             </div>

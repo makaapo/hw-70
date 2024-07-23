@@ -14,8 +14,8 @@ const App = () => {
 
       <main className="container pt-5">
         <Routes>
-          <Route path="/" element={<Home />}/>
-          <Route path="/new-contact" element={<AddContact />}/>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/new-contact" element={<AddContact/>}/>
           <Route path="/edit-contact/:id" element={<EditContact/>}/>
           <Route path="*" element={(<h1 className="text-center">Not found</h1>)}/>
         </Routes>

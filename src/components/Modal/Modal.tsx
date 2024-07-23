@@ -23,7 +23,7 @@ const Modal: React.FC<Props> = ({show, onClose, children}) => {
         >
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5">Contact Information</h1>
+              <h1 className="modal-title fs-5"><i className="bi bi-person-vcard me-2"></i>Contact information</h1>
               <button type="button" className="btn-close" onClick={onClose} />
             </div>
             <div className="modal-body">
